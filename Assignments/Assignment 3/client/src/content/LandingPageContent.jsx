@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PokemonCards from "../components/PokemonCard";
 import Pagination from "../components/Pagination";
+import SearchBar from "../components/SearchBar";
 
 const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
   // Search by Name Props
@@ -38,8 +39,17 @@ const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
 
   return (
     <>
+      <SearchBar
+        pokemons={pokemons}
+        setCurrentPage={setCurrentPage}
+        setSearchFilteredPokemons={setSearchFilteredPokemons}
+      />
       <PokemonCards pokemons={currentPokemons} />
-      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
     </>
   );
 };

@@ -69,8 +69,8 @@ const PokemonCards = ({ pokemons }) => {
                   <Typography>#{pokemonNumber(pokemon.id)}</Typography>
                   <Typography variant="h5">{pokemon.name.english}</Typography>
                   <Box sx={{display: 'flex', gap: 1, mt: 1}}>
-                    {pokemon.type.map((type) => (
-                      <PokemonType type={type} />
+                    {pokemon.type.map((type, key) => (
+                      <PokemonType key={key} type={type} />
                     ))}
                   </Box>
                 </CardContent>
