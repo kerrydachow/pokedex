@@ -7,6 +7,8 @@ import { ROUTES } from "./lib/constants";
 import Header from "./components/ui/Header";
 import Footer from "./components/ui/Footer";
 import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -20,6 +22,8 @@ function App() {
             <Header />
             <Routes>
               <Route path={ROUTES.LANDING} element={<LandingPage />} exact />
+              <Route path={ROUTES.LOGIN} element={<LoginPage />} exact/>
+              <Route path={ROUTES.SIGNUP} element={<SignupPage />} exact/>
             </Routes>
             <Footer />
           </main>

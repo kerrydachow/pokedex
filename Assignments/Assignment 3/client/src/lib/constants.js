@@ -3,5 +3,7 @@ export const POKEMON_IMAGE_URL = "https://raw.githubusercontent.com/fanzeyi/poke
 export const POKEMON_TYPES_URL = "https://raw.githubusercontent.com/fanzeyi/pokemon.json/master/types.json"
 
 export const ROUTES = {
-    LANDING: "/"
+    LANDING: "/",
+    LOGIN: "/login",
+    SIGNUP: "/signup",
 }
