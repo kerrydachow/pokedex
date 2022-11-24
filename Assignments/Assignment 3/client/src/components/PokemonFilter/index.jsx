@@ -56,11 +56,10 @@ const PokemonFilter = ({
     setSearchFilteredPokemons(pokemons);
   }, [pokemons]);
 
-
   return (
     <Container>
-      <Card>
-        <CardHeader title="Advanced Searching" sx={{ textAlign: "center" }} />
+      <Card sx={{ pb: 4 }}>
+        <CardHeader title="Filter Pokemon" sx={{ textAlign: "center" }} />
         <Box sx={{ display: "flex", justifyContent: "center" }}>
           <CardActions>
             <ExpandMore
