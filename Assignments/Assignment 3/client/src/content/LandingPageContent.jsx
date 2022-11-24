@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PokemonCards from "../components/PokemonCard";
+import Pagination from "../components/Pagination";
 
 const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
   // Search by Name Props
@@ -38,6 +39,7 @@ const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
   return (
     <>
       <PokemonCards pokemons={currentPokemons} />
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
     </>
   );
 };
