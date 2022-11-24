@@ -5,6 +5,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import { ROUTES } from "./lib/constants";
 import Header from "./components/ui/Header";
+import Footer from "./components/ui/Footer";
 import LandingPage from "./pages/LandingPage";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Routes>
               <Route path={ROUTES.LANDING} element={<LandingPage />} exact />
             </Routes>
+            <Footer />
           </main>
         </div>
       </ThemeProvider>

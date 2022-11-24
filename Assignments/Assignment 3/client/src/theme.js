@@ -195,6 +195,13 @@ export const themeSettings = (mode) => {
           },
         },
       },
+      MuiLink : {
+        styleOverrides: {
+          root: {
+            textDecoration: 'none',
+          }
+        },
+      },
     },
   };
 };

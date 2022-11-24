@@ -23,7 +23,7 @@ const Header = () => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" p={2}>
+    <Box display="flex" justifyContent="space-between" margin="auto" p={2} maxWidth="xl">
       {/* Logo and title */}
       <Box display="flex">
         <Button
