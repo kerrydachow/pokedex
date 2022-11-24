@@ -39,8 +39,8 @@ const PokemonCards = ({ pokemons }) => {
           <Grid item xs={12} sm={6} md={4} lg={3} key={pokemon.id}>
             <Tooltip
               arrow
-              title={Object.entries(pokemon.base).map(([key, val]) => (
-                <Typography variant="h5">
+              title={Object.entries(pokemon.base).map(([key, val], uniqueKey) => (
+                <Typography variant="h5" key={uniqueKey}>
                   {key}: {val}
                 </Typography>
               ))}
