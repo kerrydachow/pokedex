@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PokemonCards from "../components/PokemonCard";
 import Pagination from "../components/Pagination";
-import SearchBar from "../components/SearchBar";
+import PokemonFilter from "../components/PokemonFilter";
 
 const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
-  // Search by Name Props
-  const [searchFilteredPokemons, setSearchFilteredPokemons] = useState([]);
-
-  // Checkbox Filter Props
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [typeFilteredPokemons, setTypeFilteredPokemons] = useState([]);
-
-  // Combine filtered Searches
-  const filteredPokemons = searchFilteredPokemons.filter((pokemon) =>
-    typeFilteredPokemons.includes(pokemon)
-  );
-
   // Pagination Props
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);
+  const [filteredPokemons, setFilteredPokemons] = useState(pokemons);
   const totalPages = Math.ceil(filteredPokemons.length / pokemonsPerPage);
 
   // PokemonImage Props
@@ -30,19 +19,16 @@ const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
   );
 
   useEffect(() => {
-    setTypeFilteredPokemons(pokemons);
-  }, [pokemons]);
-
-  useEffect(() => {
-    setSearchFilteredPokemons(pokemons);
+    setFilteredPokemons(pokemons);
   }, [pokemons]);
 
   return (
     <>
-      <SearchBar
+      <PokemonFilter
         pokemons={pokemons}
+        pokemonTypes={pokemonTypes}
         setCurrentPage={setCurrentPage}
-        setSearchFilteredPokemons={setSearchFilteredPokemons}
+        setFilteredPokemons={setFilteredPokemons}
       />
       <PokemonCards pokemons={currentPokemons} />
       <Pagination

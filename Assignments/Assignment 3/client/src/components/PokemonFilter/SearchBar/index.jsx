@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Box, useTheme, InputBase, IconButton } from "@mui/material";
-import { tokens } from "../../theme";
+import { tokens } from "../../../theme";
 import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ pokemons, setCurrentPage, setSearchFilteredPokemons }) => {

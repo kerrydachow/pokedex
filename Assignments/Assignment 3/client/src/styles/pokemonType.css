@@ -11,13 +11,9 @@
 }
 
 .type-filter {
-    display: inline-block;
-    width: 50px;
-    text-align: center;
+    width: 100px;
     padding: 1px 12px 1px 12px;
-    margin-left: 5px;
     border-radius: 3px;
-    font-size: 12px;
 }
 
 .Grass {
