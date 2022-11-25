@@ -193,6 +193,13 @@ export const themeSettings = (mode) => {
             color: colors.primary[100],
             borderColor: colors.primary[100],
           },
+          contained: {
+            color: colors.primary[900],
+            backgroundColor: colors.primary[100],
+            "&:hover": {
+              backgroundColor: colors.primary[300],
+            }
+          },
         },
       },
       MuiLink : {
