@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import axios from 'axios'
 
 const LoginContainer = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -31,8 +32,14 @@ const LoginContainer = () => {
     password: Yup.string().required("Required"),
   });
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    const { email, password } = values;
+    try {
+      const res = await axios.post("http://localhost:4001/login", { email, password });
+      console.log(res.data);
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (

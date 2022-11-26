@@ -8,6 +8,8 @@ class UserBadRequest extends Error {
 
 class UndefinedRequiredParameters extends UserBadRequest {};
 
+class FailedToCreateUser extends UserBadRequest {};
+
 class UserNotFound extends UserBadRequest {};
 
 class UserNotOnline extends UserBadRequest {}
@@ -40,6 +42,7 @@ module.exports = {
     UndefinedRequiredParameters,
     UserNotFound,
     UserNotOnline,
+    FailedToCreateUser,
     IncorrectPassword,
     UserAlreadyExists,
     InvalidToken,

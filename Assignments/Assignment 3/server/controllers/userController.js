@@ -5,15 +5,13 @@ const userModel = require("../models/userModel");
 const refreshTokenModel = require("../models/refreshTokenModel")
 const asyncWrapper = require("../utils/asyncWrapper");
 const { TOKEN_MAX_AGE } = require('../utils/constants');
-const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, UserFailsValidation, FailedToUpdateToken, FailedToCreateToken, FailedToAuthenticateRefreshToken, FailedToFindRefreshToken, UserNotOnline } = require("../utils/errors/userErrors");
+const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, FailedToCreateUser, FailedToUpdateToken, FailedToCreateToken, FailedToAuthenticateRefreshToken, FailedToFindRefreshToken, UserNotOnline } = require("../utils/errors/userErrors");
 
 const registerUser = asyncWrapper(async (req, res, next) => {
-    const { username, password, email } = req.body;
-    if (await userModel.findOne({username}))
-        return next(new UserAlreadyExists("Username already exists in database."));
+    const { email, password } = req.body;
+    if (await userModel.findOne({ email }))
+        return next(new UserAlreadyExists("Email already exists in database."));
     switch (true) {
-        case !username:
-            return next(new UndefinedRequiredParameters("Username is undefined."));
         case !password:
             return next(new UndefinedRequiredParameters("Password is undefined."));
         case !email:
@@ -22,9 +20,9 @@ const registerUser = asyncWrapper(async (req, res, next) => {
             break;
     }
     const hashedPassword = await hashPassword(password);
-    userModel.create({ username: username, password: hashedPassword, email: email },
+    userModel.create({ email: email, password: hashedPassword },
         (err, doc) => {
-            if (err) return next(new UserFailsValidation(err.message));
+            if (err) return next(new FailedToCreateUser(err.message));
             const accessToken = jwt.sign({_id: doc._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
             const refreshToken = jwt.sign({_id: doc._id}, process.env.REFRESH_TOKEN_SECRET);
             refreshTokenModel.create({ refreshToken: refreshToken }, 
@@ -38,8 +36,8 @@ const registerUser = asyncWrapper(async (req, res, next) => {
 });
 
 const loginUser = asyncWrapper(async (req, res, next) => {
-    const { username, password } = req.body;
-    const user = await userModel.findOne({ username });
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email });
     if (!user)
         return next(new UserNotFound("User not found."));
     const validatePassword = await bcrypt.compare(password, user.password);

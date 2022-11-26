@@ -10,8 +10,8 @@ import {
   Link,
   TextField,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
+import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -32,8 +32,14 @@ const SignupContainer = () => {
     confirmPassword: Yup.string().required("Passowrd Confirmation is Required").oneOf([Yup.ref("password")],"Passwords must match"),
   });
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    const { email, password } = values;
+    try {
+      const res = await axios.post("http://localhost:4001/register", { email, password });
+      console.log(res.data);
+    } catch (err) {
+      console.log(err)
+    }
   };
 
   return (

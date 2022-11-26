@@ -7,14 +7,6 @@ const userSchema = new mongoose.Schema ({
         enum: ['admin', 'user'],
         default: 'user',
     },
-    username: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        minLength: 3,
-        maxLength: 20
-    },
     password: {
         type: String,
         required: true,
@@ -25,6 +17,7 @@ const userSchema = new mongoose.Schema ({
     email: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         minLength: 3,
     },
