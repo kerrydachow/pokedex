@@ -9,16 +9,22 @@ const { errorLogger, errorResponder, invalidPathHandler, errorValidator } = requ
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 const connectDatabase = require("./utils/connectDatabase");
 require("dotenv").config();
 
 const app = express();
 const login = express();
 
+// Allow CORS
+
+app.use(cors({credentials: true, origin: "http://localhost:3000"}))
+login.use(cors({credentials: true, origin: "http://localhost:3000"}))
+
 
 app.listen(SERVER_PORT, async () => {
     try {
-        connectDatabase(stalePokemon=true); // Set to 'true' to (re)populate pokemon
+        connectDatabase(stalePokemon=false); // Set to 'true' to (re)populate pokemon
     } catch (error) {
         console.log(error);
         console.log("Failed to connect");

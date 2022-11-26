@@ -8,7 +8,7 @@ const userAuth = (req, res, next) => {
     if (!token)
         return next(new InvalidToken("Access denied, please check your 'appid' or view API docs for instructions."));
     try {
-        jwt.verify(token, process.env.TOKEN_SECRET)
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     } catch (err) {
         return next(new InvalidToken("Access denied, invalid token provided, please double check your token."));
     }

@@ -18,6 +18,22 @@ class UserAlreadyExists extends UserBadRequest {};
 
 class InvalidToken extends UserBadRequest{};
 
+class FailedToCreateToken extends UserBadRequest{};
+
+class FailedToAuthenticateRefreshToken extends UserBadRequest{
+    constructor(message) {
+        super(message)
+        this.statusCode = 403;
+    };
+};
+
+class FailedToFindRefreshToken extends UserBadRequest{
+    constructor(message) {
+        super(message)
+        this.statusCode = 401;
+    };
+};
+
 class FailedToUpdateToken extends UserBadRequest{};
 
 module.exports = {
@@ -27,5 +43,8 @@ module.exports = {
     IncorrectPassword,
     UserAlreadyExists,
     InvalidToken,
-    FailedToUpdateToken
+    FailedToCreateToken,
+    FailedToAuthenticateRefreshToken,
+    FailedToFindRefreshToken,
+    FailedToUpdateToken,
 }

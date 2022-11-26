@@ -31,10 +31,7 @@ const userSchema = new mongoose.Schema ({
     date: {
         type: Date,
         default: Date.now
-    },
-    token: {
-        type: String
-    },
+    }
 });
 
 module.exports = mongoose.model('pokeuser', userSchema);
