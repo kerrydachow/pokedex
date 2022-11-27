@@ -34,6 +34,7 @@ const createNewAccessToken = asyncWrapper(async (req, res, next) => {
 
 const removeRefreshToken = asyncWrapper(async (req, res, next) => {
     const refreshToken = req.body.token;
+    console.log(req.body);
     if (refreshToken == null) return next(new FailedToFindRefreshToken("Refresh token supplied was null."))
     refreshTokenModel.deleteOne({ refreshToken: refreshToken }, 
         (err, doc) => {

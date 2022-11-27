@@ -51,7 +51,7 @@ const loginUser = asyncWrapper(async (req, res, next) => {
             if (err) return next(new FailedToCreateToken(err.message));
             res.header('auth-token-access', accessToken);
             res.header('auth-token-refresh', refreshToken);
-            res.send("Login is successful.");
+            res.json({ user: { ...user._doc, password: null }, accessToken: accessToken, refreshToken: refreshToken })
     })
     // userModel.findOne(
     //     { username: username },
