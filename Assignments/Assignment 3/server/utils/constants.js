@@ -8,7 +8,8 @@ const API_PORT = 443;
 
 const ROUTE_NOT_FOUND = "Improper Route. Please check out the API docs.";
 
-const TOKEN_MAX_AGE = 2 * 60 * 60 * 1000;
+const ACCESS_TOKEN_MAX_AGE = '30s'
+const REFRESH_TOKEN_MAX_AGE = '365d'
 
 module.exports = {
     SERVER_PORT,
@@ -18,5 +19,6 @@ module.exports = {
     POKEMON_TYPE_PATH,
     POKEMON_PATH,
     ROUTE_NOT_FOUND,
-    TOKEN_MAX_AGE
+    ACCESS_TOKEN_MAX_AGE,
+    REFRESH_TOKEN_MAX_AGE,
 }

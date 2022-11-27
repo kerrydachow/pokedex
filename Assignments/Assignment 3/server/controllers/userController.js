@@ -4,8 +4,9 @@ const jwt = require('jsonwebtoken');
 const userModel = require("../models/userModel");
 const refreshTokenModel = require("../models/refreshTokenModel")
 const asyncWrapper = require("../utils/asyncWrapper");
-const { TOKEN_MAX_AGE } = require('../utils/constants');
-const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, FailedToCreateUser, FailedToUpdateToken, FailedToCreateToken, FailedToAuthenticateRefreshToken, FailedToFindRefreshToken } = require("../utils/errors/userErrors");
+const { ACCESS_TOKEN_MAX_AGE, REFRESH_TOKEN_MAX_AGE } = require('../utils/constants');
+const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, FailedToCreateUser } = require("../utils/errors/userErrors");
+const { FailedToUpdateToken, FailedToCreateToken } = require("../utils/errors/tokenErrors");
 
 const registerUser = asyncWrapper(async (req, res, next) => {
     const { email, password } = req.body;
@@ -23,8 +24,8 @@ const registerUser = asyncWrapper(async (req, res, next) => {
     userModel.create({ email: email, password: hashedPassword },
         (err, doc) => {
             if (err) return next(new FailedToCreateUser(err.message));
-            const accessToken = jwt.sign({_id: doc._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
-            const refreshToken = jwt.sign({_id: doc._id}, process.env.REFRESH_TOKEN_SECRET);
+            const accessToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
+            const refreshToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
             refreshTokenModel.create({ refreshToken: refreshToken }, 
                 (err, doc) => {
                     if (err) return next(new FailedToCreateToken(err.message));
@@ -43,8 +44,8 @@ const loginUser = asyncWrapper(async (req, res, next) => {
     const validatePassword = await bcrypt.compare(password, user.password);
     if (!validatePassword)
         return next(new IncorrectPassword("Password is incorrect."));
-    const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1hr' })
-    const refreshToken = jwt.sign({_id: user._id}, process.env.REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign({ _id: user._id, userType: user.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
+    const refreshToken = jwt.sign({ _id: user._id, userType: user.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
     refreshTokenModel.create({ refreshToken: refreshToken }, 
         (err, doc) => {
             if (err) return next(new FailedToCreateToken(err.message));
