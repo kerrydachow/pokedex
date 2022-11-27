@@ -5,7 +5,7 @@ const userModel = require("../models/userModel");
 const refreshTokenModel = require("../models/refreshTokenModel")
 const asyncWrapper = require("../utils/asyncWrapper");
 const { TOKEN_MAX_AGE } = require('../utils/constants');
-const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, FailedToCreateUser, FailedToUpdateToken, FailedToCreateToken, FailedToAuthenticateRefreshToken, FailedToFindRefreshToken, UserNotOnline } = require("../utils/errors/userErrors");
+const { UndefinedRequiredParameters, UserNotFound, IncorrectPassword, UserAlreadyExists, FailedToCreateUser, FailedToUpdateToken, FailedToCreateToken, FailedToAuthenticateRefreshToken, FailedToFindRefreshToken } = require("../utils/errors/userErrors");
 
 const registerUser = asyncWrapper(async (req, res, next) => {
     const { email, password } = req.body;
@@ -75,20 +75,6 @@ const logoutUser = asyncWrapper(async (req, res, next) => {
             if (err) return next(new FailedToUpdateToken(err));
             res.send("Logout is successful.");
     })
-})
-
-const createNewAccessToken = asyncWrapper(async (req, res, next) => {
-    const refreshToken = req.body.token;
-    if (refreshToken == null) return next(new FailedToFindRefreshToken("Refresh token supplied was null."))
-    refreshTokenModel.findOne({ refreshToken: refreshToken }, 
-        (err, doc) => {
-            if (err) return next(new FailedToAuthenticateRefreshToken(err.message));
-            jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-                if (err) return next(new FailedToAuthenticateRefreshToken(err.message));
-                const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' })
-                res.json({ accessToken: accessToken})
-            })
-        })
 })
 
 const hashPassword = async password => {

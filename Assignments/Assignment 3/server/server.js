@@ -3,6 +3,7 @@ const pokemonAdminRoute = require('./routes/pokemonAdminRoute');
 const pokemonUserRoute = require('./routes/pokemonUserRoute');
 const userRoute = require("./routes/userRoute");
 const errorRoute = require("./routes/errorRoute");
+const tokenRoute = require("./routes/tokenRoute")
 const userAuth = require("./middlewares/userAuth");
 const adminAuth = require("./middlewares/adminAuth");
 const { errorLogger, errorResponder, invalidPathHandler, errorValidator } = require("./middlewares/errorHandler");
@@ -19,7 +20,7 @@ const login = express();
 // Allow CORS
 
 app.use(cors({credentials: true, origin: "http://localhost:3000"}))
-login.use(cors({credentials: true, origin: "http://localhost:3000"}))
+login.use(cors({ exposeHeaders: 'Authorization', credentials: true, origin: "http://localhost:3000" }))
 
 
 app.listen(SERVER_PORT, async () => {
@@ -40,6 +41,7 @@ login.listen(LOGIN_PORT, async () => {
 login.use(express.json());
 login.use(cookieParser());
 login.use(userRoute);
+login.use(tokenRoute);
 login.use(errorRoute);
 login.use(errorLogger);
 login.use(errorValidator);
