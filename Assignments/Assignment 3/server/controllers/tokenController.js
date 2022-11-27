@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const refreshTokenModel = require("../models/refreshTokenModel")
 const asyncWrapper = require("../utils/asyncWrapper");
 const { ACCESS_TOKEN_MAX_AGE } = require('../utils/constants');
-const { FailedToFindRefreshToken, FailedToAuthenticateRefreshToken } = require("../utils/errors/tokenErrors")
+const { FailedToFindRefreshToken, FailedToAuthenticateRefreshToken, InvalidToken } = require("../utils/errors/tokenErrors")
 
 const checkIfAccessTokenExpired = asyncWrapper(async (req, res, next) => {
     const accessToken = req.body.token;
@@ -32,7 +32,19 @@ const createNewAccessToken = asyncWrapper(async (req, res, next) => {
         })
 })
 
+const removeRefreshToken = asyncWrapper(async (req, res, next) => {
+    const refreshToken = req.body.token;
+    if (refreshToken == null) return next(new FailedToFindRefreshToken("Refresh token supplied was null."))
+    refreshTokenModel.deleteOne({ refreshToken: refreshToken }, 
+        (err, doc) => {
+            if (err) return next(new InvalidToken(err.message));
+            if (!doc) return next(new FailedToFindRefreshToken("Refresh token supplied was not found."))
+            res.send("Successfully delete token.");
+        })
+})
+
 module.exports = {
     checkIfAccessTokenExpired,
     createNewAccessToken,
+    removeRefreshToken,
 }
