@@ -9,13 +9,14 @@ import {
 import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ColorModeContext } from "../../theme";
-import { UserProfileContext }from "../../contexts/UserProfile.Context";
+import { UserProfileContext } from "../../contexts/UserProfile.Context";
 
 // Icons
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import CatchingPokemonOutlinedIcon from "@mui/icons-material/CatchingPokemonOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 
 const Header = () => {
@@ -25,7 +26,13 @@ const Header = () => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box display="flex" justifyContent="space-between" margin="auto" p={2} maxWidth="xl">
+    <Box
+      display="flex"
+      justifyContent="space-between"
+      margin="auto"
+      p={2}
+      maxWidth="xl"
+    >
       {/* Logo and title */}
       <Box display="flex">
         <Button
@@ -40,12 +47,14 @@ const Header = () => {
 
       {/* Icons */}
       <Box display="flex">
-        {/* Admin Panel */}
-        <IconButton>
-          <Tooltip title="Admin Panel">
-            <AdminPanelSettingsOutlinedIcon />
-          </Tooltip>
-        </IconButton>
+        {user?.userType === "admin" ? 
+        (
+          <IconButton>
+            <Tooltip title="Admin Panel">
+              <AdminPanelSettingsOutlinedIcon />
+            </Tooltip>
+          </IconButton>
+        ) : null}
 
         {/*  Color mode toggle */}
         <IconButton onClick={colorMode.toggleColorMode}>
@@ -61,11 +70,19 @@ const Header = () => {
         </IconButton>
 
         {/* Logout */}
-        <IconButton onClick={logout}>
-          <Tooltip title="Logout" >
-            <LogoutOutlinedIcon />
-          </Tooltip>
-        </IconButton>
+        {user ? (
+          <IconButton onClick={logout}>
+            <Tooltip title="Logout">
+              <LogoutOutlinedIcon />
+            </Tooltip>
+          </IconButton>
+        ) : (
+          <IconButton component={RouterLink} to="/login">
+            <Tooltip title="Login">
+              <LoginOutlinedIcon />
+            </Tooltip>
+          </IconButton>
+        )}
       </Box>
     </Box>
   );
