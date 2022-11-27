@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import {
@@ -10,17 +10,18 @@ import {
   Link,
   TextField,
   Typography,
-  useMediaQuery,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import axios from 'axios'
+import axios from "axios";
+import { UserProfileContext } from "../../../contexts/UserProfile.Context";
 
 const LoginContainer = () => {
+  const { setRefreshToken, setAccessToken, setUser } = useContext(UserProfileContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
-  const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const initialValues = {
     email: "",
@@ -35,10 +36,22 @@ const LoginContainer = () => {
   const handleFormSubmit = async (values) => {
     const { email, password } = values;
     try {
-      const res = await axios.post("http://localhost:4001/login", { email, password });
-      console.log(res.data);
+      setIsSubmitting(true);
+      const userData = await axios.post("http://localhost:4001/api/user/login", {
+        email,
+        password,
+      });
+      console.log(userData.data.user);
+      localStorage.setItem('user-details', JSON.stringify(userData.data.user));
+      localStorage.setItem('access-token', userData.data.accessToken);
+      localStorage.setItem('refresh-token', userData.data.refreshToken);
+      setRefreshToken(userData.refreshToken);
+      setAccessToken(userData.accessToken);
+      setUser(userData.user);
     } catch (err) {
-      console.log(err)
+      console.log(err);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -110,13 +123,14 @@ const LoginContainer = () => {
                 type="submit"
                 color="inherit"
                 variant="contained"
+                disabled={isSubmitting ? true : false}
                 sx={{ gridColumn: "span 4", height: 50 }}
               >
                 Login
               </Button>
             </Box>
             <Link href="signup" textAlign="center" color="inherit">
-              <Typography variant="h6"sx={{ mt: 3 }}>
+              <Typography variant="h6" sx={{ mt: 3 }}>
                 Don't have an Account? <u>Create Account</u>
               </Typography>
             </Link>

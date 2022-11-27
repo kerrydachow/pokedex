@@ -35,8 +35,8 @@ const SignupContainer = () => {
   const handleFormSubmit = async (values) => {
     const { email, password } = values;
     try {
-      const res = await axios.post("http://localhost:4001/register", { email, password });
-      console.log(res.data);
+      const res = await axios.post("http://localhost:4001/api/user/register", { email, password });
+      console.log(res.headers);
     } catch (err) {
       console.log(err)
     }

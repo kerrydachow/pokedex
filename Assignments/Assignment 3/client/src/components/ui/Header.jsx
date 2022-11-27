@@ -9,16 +9,18 @@ import {
 import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ColorModeContext } from "../../theme";
+import { UserProfileContext }from "../../contexts/UserProfile.Context";
 
 // Icons
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import CatchingPokemonOutlinedIcon from "@mui/icons-material/CatchingPokemonOutlined";
-import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 
 const Header = () => {
+  const { user, logout } = useContext(UserProfileContext);
+  console.log(user);
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
 
@@ -59,8 +61,8 @@ const Header = () => {
         </IconButton>
 
         {/* Logout */}
-        <IconButton>
-          <Tooltip title="Logout">
+        <IconButton onClick={logout}>
+          <Tooltip title="Logout" >
             <LogoutOutlinedIcon />
           </Tooltip>
         </IconButton>
