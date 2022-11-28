@@ -4,8 +4,6 @@ import Pagination from "../components/Pagination";
 import PokemonFilter from "../components/PokemonFilter";
 
 const PokemonAdvancedFilteringContent = ({ pokemons, pokemonTypes }) => {
-  console.log( pokemons )
-  console.log( pokemonTypes)
   // Pagination Props
   const [currentPage, setCurrentPage] = useState(1);
   const [pokemonsPerPage] = useState(12);

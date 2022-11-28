@@ -15,6 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import { UserProfileContext } from "../../../contexts/UserProfile.Context";
+import { useNavigate } from 'react-router-dom';
 
 const LoginContainer = () => {
   const { setRefreshToken, setAccessToken, setUser } = useContext(UserProfileContext);
@@ -22,6 +23,7 @@ const LoginContainer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const navigate = useNavigate();
 
   const initialValues = {
     email: "",
@@ -52,6 +54,7 @@ const LoginContainer = () => {
       console.log(err);
     } finally {
       setIsSubmitting(false);
+      navigate('/')
     }
   };
 

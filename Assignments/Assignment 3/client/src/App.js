@@ -4,6 +4,8 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import { Routes, Route } from "react-router-dom";
 import { ROUTES } from "./lib/constants";
+import PublicRoute from "./utility/PublicRoute";
+
 import Header from "./components/ui/Header";
 import Footer from "./components/ui/Footer";
 import LandingPage from "./pages/LandingPage";
@@ -22,8 +24,12 @@ function App() {
             <Header />
             <Routes>
               <Route path={ROUTES.LANDING} element={<LandingPage />} exact />
-              <Route path={ROUTES.LOGIN} element={<LoginPage />} exact/>
-              <Route path={ROUTES.SIGNUP} element={<SignupPage />} exact/>
+              <Route exact path={ROUTES.LOGIN} element={<PublicRoute />}>
+                <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+              </Route>
+              <Route exact path={ROUTES.SIGNUP} element={<PublicRoute />}>
+                <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+              </Route>
             </Routes>
             <Footer />
           </main>

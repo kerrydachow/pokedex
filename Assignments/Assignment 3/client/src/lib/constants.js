@@ -6,4 +6,5 @@ export const ROUTES = {
     LANDING: "/",
     LOGIN: "/login",
     SIGNUP: "/signup",
+    ADMIN_PANEL: "/admin-dashboard"
 }

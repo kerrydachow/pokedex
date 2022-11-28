@@ -35,6 +35,7 @@ const UserProfileProvider = ({ children }) => {
     await axios.delete(`http://localhost:4001/api/token/deleteRefresh`, { data: {token: refreshToken }});
     console.log("Logged user out!")
     localStorage.clear();
+    window.location.reload(false);
   }
 
   const isUserAuthenticated = () => {
