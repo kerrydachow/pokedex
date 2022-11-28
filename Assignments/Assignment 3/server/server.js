@@ -20,7 +20,7 @@ const login = express();
 
 // Allow CORS
 app.use(cors({credentials: true, origin: "http://localhost:3000"}))
-login.use(cors({ exposedHeaders: ['auth-token-access', 'auth-token-refresh'], credentials: true, origin: "http://localhost:3000" }))
+login.use(cors({ exposedHeaders: ['auth-token-access', 'auth-token-refresh'], origin: "http://localhost:3000" }))
 
 
 app.listen(SERVER_PORT, async () => {
