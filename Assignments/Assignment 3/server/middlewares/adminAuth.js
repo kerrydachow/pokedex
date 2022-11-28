@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const adminAuth = (req, res, next) => {
     jwt.verify(req.header('auth-token-access'), process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) return next(new AuthenticationError(err.message));
-        console.log(user)
         if (user.userType != "admin") return next(new AdminPermissionsRequired("Access denied, admin permissions required."));
         return next();
     })

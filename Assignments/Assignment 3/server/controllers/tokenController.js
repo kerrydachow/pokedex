@@ -7,11 +7,9 @@ const { FailedToFindRefreshToken, FailedToAuthenticateRefreshToken, InvalidToken
 
 const checkIfAccessTokenExpired = asyncWrapper(async (req, res, next) => {
     const accessToken = req.body.token;
-    console.log(accessToken);
     if (!accessToken) res.send(true);
     jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) res.send(true)
-        console.log(user);
         res.send(false)
     })
     
@@ -35,7 +33,6 @@ const createNewAccessToken = asyncWrapper(async (req, res, next) => {
 
 const removeRefreshToken = asyncWrapper(async (req, res, next) => {
     const refreshToken = req.body.token;
-    console.log(req.body);
     if (refreshToken == null) return next(new FailedToFindRefreshToken("Refresh token supplied was null."))
     refreshTokenModel.deleteOne({ refreshToken: refreshToken }, 
         (err, doc) => {

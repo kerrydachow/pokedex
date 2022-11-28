@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const apiLogModel = require("../models/apiLogModel");
 
 const apiLogger = async (req, res, next) => {
-  console.log(req);
   const apiPathName = req._parsedUrl.pathname;
   const apiQuery = req._parsedUrl.query;
   const apiPath = req._parsedUrl.path;
