@@ -23,6 +23,7 @@ const registerUser = asyncWrapper(async (req, res, next) => {
     const hashedPassword = await hashPassword(password);
     userModel.create({ email: email, password: hashedPassword },
         (err, doc) => {
+            const user = doc;
             if (err) return next(new FailedToCreateUser(err.message));
             const accessToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
             const refreshToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
@@ -31,7 +32,7 @@ const registerUser = asyncWrapper(async (req, res, next) => {
                     if (err) return next(new FailedToCreateToken(err.message));
                     res.header('auth-token-access', accessToken);
                     res.header('auth-token-refresh', refreshToken);
-                    res.send("Successfully registered user.");
+                    res.json({ user: { ...user._doc, password: null }, accessToken: accessToken, refreshToken: refreshToken })
             })
         } );
 });

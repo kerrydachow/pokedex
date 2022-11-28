@@ -54,7 +54,7 @@ const LoginContainer = () => {
       console.log(err);
     } finally {
       setIsSubmitting(false);
-      navigate('/')
+      navigate(0)
     }
   };
 

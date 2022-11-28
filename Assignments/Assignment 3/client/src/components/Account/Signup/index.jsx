@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import {
@@ -14,11 +14,16 @@ import {
 import axios from "axios";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { UserProfileContext } from "../../../contexts/UserProfile.Context";
+import { useNavigate } from 'react-router-dom';
 
 const SignupContainer = () => {
+  const { setRefreshToken, setAccessToken, setUser } = useContext(UserProfileContext);
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleMouseDownPassword = () => setShowPassword(!showPassword);
+  const navigate = useNavigate();
 
   const initialValues = {
     email: "",
@@ -35,10 +40,19 @@ const SignupContainer = () => {
   const handleFormSubmit = async (values) => {
     const { email, password } = values;
     try {
-      const res = await axios.post("http://localhost:4001/api/user/register", { email, password });
-      console.log(res.headers);
+      setIsSubmitting(true);
+      const userData = await axios.post("http://localhost:4001/api/user/register", { email, password });
+      localStorage.setItem('user-details', JSON.stringify(userData.data.user));
+      localStorage.setItem('access-token', userData.data.accessToken);
+      localStorage.setItem('refresh-token', userData.data.refreshToken);
+      setRefreshToken(userData.refreshToken);
+      setAccessToken(userData.accessToken);
+      setUser(userData.user);
     } catch (err) {
       console.log(err)
+    } finally {
+      setIsSubmitting(false);
+      navigate(0)
     }
   };
 
@@ -136,6 +150,7 @@ const SignupContainer = () => {
                 type="submit"
                 color="inherit"
                 variant="contained"
+                disabled={isSubmitting ? true : false}
                 sx={{ gridColumn: "span 4", height: 50 }}
               >
                 Sign Up
