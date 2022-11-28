@@ -25,8 +25,8 @@ const registerUser = asyncWrapper(async (req, res, next) => {
         (err, doc) => {
             const user = doc;
             if (err) return next(new FailedToCreateUser(err.message));
-            const accessToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
-            const refreshToken = jwt.sign({ _id: doc._id, userType: doc.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
+            const accessToken = jwt.sign({ _id: doc._id, email: doc.email, userType: doc.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
+            const refreshToken = jwt.sign({ _id: doc._id, email: doc.email, userType: doc.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
             refreshTokenModel.create({ refreshToken: refreshToken }, 
                 (err, doc) => {
                     if (err) return next(new FailedToCreateToken(err.message));
@@ -45,8 +45,8 @@ const loginUser = asyncWrapper(async (req, res, next) => {
     const validatePassword = await bcrypt.compare(password, user.password);
     if (!validatePassword)
         return next(new IncorrectPassword("Password is incorrect."));
-    const accessToken = jwt.sign({ _id: user._id, userType: user.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
-    const refreshToken = jwt.sign({ _id: user._id, userType: user.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
+    const accessToken = jwt.sign({ _id: user._id, email: user.email, userType: user.userType }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
+    const refreshToken = jwt.sign({ _id: user._id, email: user.email, userType: user.userType }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: REFRESH_TOKEN_MAX_AGE });
     refreshTokenModel.create({ refreshToken: refreshToken }, 
         (err, doc) => {
             if (err) return next(new FailedToCreateToken(err.message));

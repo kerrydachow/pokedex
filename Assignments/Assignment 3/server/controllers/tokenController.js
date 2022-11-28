@@ -26,7 +26,7 @@ const createNewAccessToken = asyncWrapper(async (req, res, next) => {
             if (!doc) return next(new FailedToAuthenticateRefreshToken("User has logged out and token is invalid."));
             jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
                 if (err) return next(new FailedToAuthenticateRefreshToken(err.message));
-                const accessToken = jwt.sign({_id: user._id, userType: user.userType}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
+                const accessToken = jwt.sign({_id: user._id, email: user.email, userType: user.userType}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: ACCESS_TOKEN_MAX_AGE })
                 res.header("auth-token-access", accessToken)
                 res.json({ accessToken: accessToken })
             })

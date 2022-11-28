@@ -15,6 +15,17 @@ const errorValidator = (err, req, res, next) => {
     next(err);
 }
 
+const errorApiLogger = (err, req, res, next) => {
+    const apiPathName = req._parsedUrl.pathname;
+    const apiQuery = req._parsedUrl.query
+    const apiPath = req._parsedUrl.path;
+    const payload = req.headers['auth-token-access']
+    const errorStatusCode = err.statusCode;
+    const errorResponseCode = Math.floor(errorStatusCode / 100) * 100;
+    const apiCallDate = new Date();
+    next(err)
+}
+
 const errorResponder = (err, req, res, next) => {
     res.status(err.statusCode).json({ error: err, errMsg: err.message });
 }
@@ -26,6 +37,7 @@ const invalidPathHandler = (req, res, next) => {
 module.exports = {
     errorLogger,
     errorValidator,
+    errorApiLogger,
     errorResponder,
     invalidPathHandler
 }

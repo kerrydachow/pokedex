@@ -6,7 +6,8 @@ const errorRoute = require("./routes/errorRoute");
 const tokenRoute = require("./routes/tokenRoute")
 const userAuth = require("./middlewares/userAuth");
 const adminAuth = require("./middlewares/adminAuth");
-const { errorLogger, errorResponder, invalidPathHandler, errorValidator } = require("./middlewares/errorHandler");
+const apiLogger = require("./middlewares/apiLogger")
+const { errorLogger, errorResponder, invalidPathHandler, errorValidator, errorApiLogger } = require("./middlewares/errorHandler");
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -51,10 +52,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(errorRoute);
 app.use(userAuth);
+app.use(apiLogger);
 app.use(pokemonUserRoute);
 app.use(adminAuth);
 app.use(pokemonAdminRoute);
 app.use(errorLogger);
 app.use(errorValidator);
+app.use(errorApiLogger);
 app.use(errorResponder);
 app.use(invalidPathHandler);
