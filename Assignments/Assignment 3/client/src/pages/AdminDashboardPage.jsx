@@ -13,7 +13,7 @@ const AdminDashboardPage = () => {
       })
       .then((res) => {
         console.log(res);
-        setApiLogs(res);
+        setApiLogs(res.data);
       });
   }, []);
   return <AdminDashboardPageContent />;

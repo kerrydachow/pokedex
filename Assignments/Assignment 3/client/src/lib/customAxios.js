@@ -21,7 +21,7 @@ axiosJwt.interceptors.request.use(
     const decodedToken = jwt_decode(localStorage.getItem("access-token"));
     if (decodedToken.exp * 1000 < currentDate.getTime()) {
       await getNewAccessToken();
-      config.headers["auth-access-token"] = localStorage.getItem("access-token");
+      config.headers["auth-token-access"] = localStorage.getItem("access-token");
     }
     return config;
   },
