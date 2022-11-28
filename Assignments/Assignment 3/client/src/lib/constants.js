@@ -6,5 +6,7 @@ export const ROUTES = {
     LANDING: "/",
     LOGIN: "/login",
     SIGNUP: "/signup",
-    ADMIN_PANEL: "/admin-dashboard"
+    ADMIN_PANEL: "/admin-dashboard",
+    ERROR_404: "/error-does-not-exist",
+    ERROR_401: "/error-authorization",
 }

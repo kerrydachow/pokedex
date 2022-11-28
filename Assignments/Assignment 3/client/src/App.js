@@ -11,6 +11,9 @@ import Footer from "./components/ui/Footer";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import Error401Page from "./pages/Error401Page";
+import Error404Page from "./pages/Error404Page";
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -30,6 +33,7 @@ function App() {
               <Route exact path={ROUTES.SIGNUP} element={<PublicRoute />}>
                 <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
               </Route>
+              <Route path="*" element={<Error404Page />} />
             </Routes>
             <Footer />
           </main>
