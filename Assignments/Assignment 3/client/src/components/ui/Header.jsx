@@ -10,6 +10,7 @@ import { useContext } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { ColorModeContext } from "../../theme";
 import { UserProfileContext } from "../../contexts/UserProfile.Context";
+import { ROUTES } from "../../lib/constants";
 
 // Icons
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -49,7 +50,7 @@ const Header = () => {
       <Box display="flex">
         {user?.userType === "admin" ? 
         (
-          <IconButton>
+          <IconButton component={RouterLink} to={ROUTES.ADMIN_PANEL}>
             <Tooltip title="Admin Panel">
               <AdminPanelSettingsOutlinedIcon />
             </Tooltip>
@@ -77,7 +78,7 @@ const Header = () => {
             </Tooltip>
           </IconButton>
         ) : (
-          <IconButton component={RouterLink} to="/login">
+          <IconButton component={RouterLink} to={ROUTES.LOGIN}>
             <Tooltip title="Login">
               <LoginOutlinedIcon />
             </Tooltip>

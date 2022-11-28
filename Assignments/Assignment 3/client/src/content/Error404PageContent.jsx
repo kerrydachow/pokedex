@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Container, Grid, Typography } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 
 const Error401PageContent = () => {
   return (
@@ -24,7 +25,7 @@ const Error401PageContent = () => {
           <Typography variant="h5" sx={{ mb: 2 }}>
             Where are you going?
           </Typography>
-          <Button variant="contained" to="/">
+          <Button variant="contained" component={RouterLink} to="/">
             Back Home
           </Button>
         </Grid>
