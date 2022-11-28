@@ -1,20 +1,13 @@
-const userModel = require("../models/userModel");
 const { AdminPermissionsRequired, AuthenticationError } = require("../utils/errors/permissionErrors");
+const jwt = require("jsonwebtoken");
 
 const adminAuth = (req, res, next) => {
-    userModel.findOne(
-        { token: req.query.appid },
-        (err, doc) => {
-            console.log(doc);
-            if (err)
-                return next(new AuthenticationError(err.message));
-            else if (!doc)
-                return next(new AuthenticationError("Access denied, token has expired, please log in again."));
-            else if (doc.userType !== "admin")
-                return next(new AdminPermissionsRequired("Access denied, admin permissions required."));
-            else
-                next();
-        })
+    jwt.verify(req.header('auth-token-access'), process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if (err) return next(new AuthenticationError(err.message));
+        console.log(user)
+        if (user.userType != "admin") return next(new AdminPermissionsRequired("Access denied, admin permissions required."));
+        return next();
+    })
 }
 
 module.exports = adminAuth;
