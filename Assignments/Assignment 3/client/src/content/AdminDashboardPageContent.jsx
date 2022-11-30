@@ -1,17 +1,17 @@
-import React from 'react';
-import { Container, Grid } from '@mui/material';
+import React from "react";
+import { Container, Grid } from "@mui/material";
 import LineChart from "../components/LineChart";
 
-const AdminDashboardPageContent = () => {
+const AdminDashboardPageContent = ({ logs }) => {
   return (
     <Container>
-      <Grid container>
+      <Grid container spacing={6}>
         <Grid item>
-          <LineChart />
+          <LineChart data={logs} />
         </Grid>
       </Grid>
     </Container>
-  )
-}
+  );
+};
 
-export default AdminDashboardPageContent
+export default AdminDashboardPageContent;
