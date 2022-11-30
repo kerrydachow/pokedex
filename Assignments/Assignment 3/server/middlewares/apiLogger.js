@@ -3,6 +3,8 @@ const apiLogModel = require("../models/apiLogModel");
 
 const apiLogger = async (req, res, next) => {
   const apiPathName = req._parsedUrl.pathname;
+  if (apiPathName === '/api/v1/logs' || apiPathName === '/api/v1/errorLogs')
+    return next();
   const apiQuery = req._parsedUrl.query;
   const apiPath = req._parsedUrl.path;
   const payload = req.headers["auth-token-access"];
