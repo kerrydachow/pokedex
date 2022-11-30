@@ -7,7 +7,6 @@ const BarChartTopUsers = ({ data }) => {
   const colors = tokens(theme.palette.mode);
 
   const parsedData = [];
-
   const uniqueUsers = [];
 
   // Filter each unique endpoint
@@ -26,10 +25,6 @@ const BarChartTopUsers = ({ data }) => {
   parsedData.forEach( (endpoint) => (uniqueUsers.forEach( (user) => {
     endpoint[user] = data.filter((log) => log.requestee === user && endpoint.Endpoint === log.pathName).length;
   })))
-  console.log(parsedData);
-  
-  console.log(uniqueUsers);
-
 
   return (
     <div
