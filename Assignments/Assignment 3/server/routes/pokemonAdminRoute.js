@@ -17,4 +17,6 @@ router.get('/api/v1/logs', analyticsController.getApiAnalytics);
 
 router.get('/api/v1/errorLogs', analyticsController.getApiErrorAnalytics);
 
+router.get('/api/v1/errorLogs400', analyticsController.getApi400ErrorAnalytics);
+
 module.exports = router;
