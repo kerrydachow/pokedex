@@ -2,7 +2,7 @@ import { Typography, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../../theme";
 
-const BarChart = ({ data }) => {
+const BarChartTopUsers = ({ data }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -181,4 +181,4 @@ const BarChart = ({ data }) => {
   );
 };
 
-export default BarChart;
+export default BarChartTopUsers;

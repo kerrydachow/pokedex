@@ -2,7 +2,7 @@ import { Typography, useTheme } from "@mui/material";
 import { ResponsiveLine } from "@nivo/line";
 import { tokens } from "../../theme";
 
-const LineChart = ({ data }) => {
+const LineChartTopUsers = ({ data }) => {
 
   // Credits to: https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
   Date.prototype.minusDays = function(days) {
@@ -154,4 +154,4 @@ const LineChart = ({ data }) => {
   );
 };
 
-export default LineChart;
+export default LineChartTopUsers;

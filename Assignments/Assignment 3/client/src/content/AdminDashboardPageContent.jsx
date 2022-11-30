@@ -1,17 +1,17 @@
 import React from "react";
 import { Container, Grid } from "@mui/material";
-import LineChart from "../components/LineChart";
-import BarChart from "../components/BarChart"
+import LineChartTopUsers from "../components/LineChartTopUsers";
+import BarChartTopUsers from "../components/BarChartTopUsers"
 
 const AdminDashboardPageContent = ({ logs }) => {
   return (
     <Container>
       <Grid container spacing={6}>
         <Grid item>
-          <LineChart data={logs} />
+          <LineChartTopUsers data={logs} />
         </Grid>
         <Grid item>
-          <BarChart data={logs} />
+          <BarChartTopUsers data={logs} />
         </Grid>
       </Grid>
     </Container>
