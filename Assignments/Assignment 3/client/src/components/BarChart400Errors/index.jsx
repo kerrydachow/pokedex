@@ -2,12 +2,14 @@ import { Typography, useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../../theme";
 
-const BarChartTopUsers = ({ data }) => {
+const BarChart400Errors = ({ data }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
   const parsedData = [];
-  const uniqueUsers = [];
+  const statusCodes = [];
+
+  console.log(data);
 
   // Filter each unique endpoint
   data.forEach(log => {
@@ -17,14 +19,16 @@ const BarChartTopUsers = ({ data }) => {
 
   // Find all unique users
   data.forEach(log => {
-    if (!uniqueUsers.some(e => e === log.requestee))
-      uniqueUsers.push(log.requestee);
+    if (!statusCodes.some(e => e === log.statusCode))
+    statusCodes.push(log.statusCode);
   })
 
   // Find the count of all Endpoints by Users
-  parsedData.forEach( (endpoint) => (uniqueUsers.forEach( (user) => {
-    endpoint[user] = data.filter((log) => log.requestee === user && endpoint.Endpoint === log.pathName).length;
+  parsedData.forEach( (endpoint) => (statusCodes.forEach( (status) => {
+    endpoint[status] = data.filter((log) => log.statusCode === status && endpoint.Endpoint === log.pathName).length;
   })))
+
+  console.log(parsedData);
 
   return (
     <div
@@ -35,10 +39,10 @@ const BarChartTopUsers = ({ data }) => {
         textAlign: "center",
       }}
     >
-      <Typography variant="h3">Top User For Each Endpoint</Typography>
+      <Typography variant="h3">4xx Errors by Endpoint</Typography>
       <ResponsiveBar
         data={parsedData}
-        keys={uniqueUsers}
+        keys={statusCodes}
         indexBy="Endpoint"
         theme={{
           axis: {
@@ -127,7 +131,7 @@ const BarChartTopUsers = ({ data }) => {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "# API Calls",
+          legend: "# Errors",
           legendPosition: "middle",
           legendOffset: -40,
         }}
@@ -173,4 +177,4 @@ const BarChartTopUsers = ({ data }) => {
   );
 };
 
-export default BarChartTopUsers;
+export default BarChart400Errors;
