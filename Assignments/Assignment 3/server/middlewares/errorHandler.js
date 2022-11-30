@@ -18,9 +18,15 @@ const errorValidator = (err, req, res, next) => {
 
 // Logs the Error into database
 const errorApiLogger = async (err, req, res, next) => {
-  const apiPathName = req._parsedUrl.pathname;
-  const apiQuery = req._parsedUrl.query;
+  let apiPathName = req._parsedUrl.pathname;
+  let apiQuery = req._parsedUrl.query;
   const apiPath = req._parsedUrl.path;
+  if (apiPathName === apiPath) {
+    if (apiPathName.match(new RegExp('(?:.(?!/))+$'))) {
+      apiQuery = apiPathName.match(new RegExp('(?:.(?!/))+$'))[0];
+    }
+    apiPathName = apiPathName.replace(new RegExp('(?:.(?!/))+$'), "");
+  }
   const errorStatusCode = err.statusCode;
   const errorResponseCode = Math.floor(errorStatusCode / 100) * 100;
   const apiErrorLog = {

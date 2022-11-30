@@ -14,7 +14,6 @@ const getApiAnalytics = asyncWrapper(async (req, res, next) => {
 const getApi400ErrorAnalytics = asyncWrapper(async (req, res, next) => {
     try {
         const data = await apiErrorLogModel.find({responseCode: 400});
-        console.log(data);
         res.send(data);
     } catch (err) {
         console.log(err);
