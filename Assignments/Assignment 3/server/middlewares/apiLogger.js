@@ -13,6 +13,7 @@ const apiLogger = async (req, res, next) => {
     }
     apiPathName = apiPathName.replace(new RegExp('(?:.(?!/))+$'), "");
   }
+  let apiRequest = req.method;
   const payload = req.headers["auth-token-access"];
   const requesteeEmail = jwt.decode(
     payload,
@@ -22,6 +23,7 @@ const apiLogger = async (req, res, next) => {
     pathName: apiPathName,
     query: apiQuery,
     path: apiPath,
+    request: apiRequest,
     requestee: requesteeEmail,
   };
   try {

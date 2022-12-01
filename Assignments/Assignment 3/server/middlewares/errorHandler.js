@@ -27,12 +27,14 @@ const errorApiLogger = async (err, req, res, next) => {
     }
     apiPathName = apiPathName.replace(new RegExp('(?:.(?!/))+$'), "");
   }
+  let apiRequest = req.method;
   const errorStatusCode = err.statusCode;
   const errorResponseCode = Math.floor(errorStatusCode / 100) * 100;
   const apiErrorLog = {
     pathName: apiPathName,
     query: apiQuery,
     path: apiPath,
+    request: apiRequest,
     statusCode: errorStatusCode,
     responseCode: errorResponseCode,
   };

@@ -12,6 +12,10 @@ const apiErrorLogSchema = new mongoose.Schema ({
         type: String,
         required: true,
     },
+    request: {
+        type: String,
+        required: true,
+    },
     statusCode: {
         type: Number,
         required: true,
