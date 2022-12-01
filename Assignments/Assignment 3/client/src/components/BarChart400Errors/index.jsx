@@ -26,8 +26,6 @@ const BarChart400Errors = ({ data }) => {
     endpoint[status] = data.filter((log) => log.statusCode === status && endpoint.Endpoint === log.pathName).length;
   })))
 
-  console.log(parsedData);
-
   return (
     <div
       style={{

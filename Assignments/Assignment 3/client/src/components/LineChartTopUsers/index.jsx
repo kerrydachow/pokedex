@@ -89,7 +89,7 @@ const LineChartTopUsers = ({ data }) => {
           type: "linear",
           min: "0",
           max: "auto",
-          stacked: true,
+          stacked: false,
           reverse: false,
         }}
         yFormat=" >-"

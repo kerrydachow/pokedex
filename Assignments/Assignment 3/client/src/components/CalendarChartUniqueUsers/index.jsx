@@ -28,8 +28,6 @@ const CalendarChartUniqueUsers = ({ data }) => {
     })
     day.value = uniqueUserCount;
   })
-
-  console.log(parsedData);
   
   return (
     <div
