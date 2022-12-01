@@ -9,8 +9,6 @@ const BarChart400Errors = ({ data }) => {
   const parsedData = [];
   const statusCodes = [];
 
-  console.log(data);
-
   // Filter each unique endpoint
   data.forEach(log => {
     if (!parsedData.some(e => e.Endpoint === log.pathName))
@@ -34,7 +32,6 @@ const BarChart400Errors = ({ data }) => {
     <div
       style={{
         height: 500,
-        width: 550,
         position: "relative",
         textAlign: "center",
       }}
@@ -81,7 +78,7 @@ const BarChart400Errors = ({ data }) => {
         padding={0.3}
         valueScale={{ type: "linear" }}
         indexScale={{ type: "band", round: true }}
-        colors={{ scheme: "nivo" }}
+        colors={{ scheme: "accent" }}
         defs={[
           {
             id: "dots",
@@ -105,13 +102,13 @@ const BarChart400Errors = ({ data }) => {
         fill={[
           {
             match: {
-              id: "fries",
+              id: 404,
             },
             id: "dots",
           },
           {
             match: {
-              id: "sandwich",
+              id: 400,
             },
             id: "lines",
           },

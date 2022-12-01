@@ -30,7 +30,6 @@ const BarChartTopUsers = ({ data }) => {
     <div
       style={{
         height: 500,
-        width: 550,
         position: "relative",
         textAlign: "center",
       }}

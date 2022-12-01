@@ -46,7 +46,7 @@ const LineChartTopUsers = ({ data }) => {
   }))
 
   return (
-    <div style={{ height: 500, width: 550, position: "relative", textAlign: "center"}}>
+    <div style={{ height: 500, position: "relative", textAlign: "center"}}>
       <Typography variant="h3">Top API Users by ID</Typography>
       <ResponsiveLine
         data={parsedData}
