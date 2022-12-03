@@ -25,7 +25,7 @@ login.use(cors({ exposedHeaders: ['auth-token-access', 'auth-token-refresh'], or
 
 app.listen(SERVER_PORT, async () => {
     try {
-        connectDatabase(stalePokemon=false); // Set to 'true' to (re)populate pokemon
+        connectDatabase(stalePokemon=true); // Set to 'true' to (re)populate pokemon
     } catch (error) {
         console.log(error);
         console.log("Failed to connect");

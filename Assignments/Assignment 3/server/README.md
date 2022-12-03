@@ -11,6 +11,8 @@
     - .rest file
     - Postman
 ## Getting Started
+- Frontend server must be set to port `3000` to ensure proper user login and API analytics
+- Set server.js line 28 `connectDatabase(stalePokemon=true);` stalePokemon=true to populate your database with Pokemon.
 - Authentication / Login server is set to port `4001`
 - API server is set to port `4000`
 - After login use the auth-token-access JWT and set it in the requests' Headers as `auth-token-access`
